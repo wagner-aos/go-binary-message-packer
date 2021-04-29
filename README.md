@@ -2,8 +2,7 @@
 
 # Go Binary Message Packer
 
-This module helps to convert binary messages received on tcp socket stream
-in order to be processed by another server with different encoding.
+This module helps to convert binary messages received on the TCP socket stream to be processed by another server with a different encoding.
 
 | Date | Author | Comments | Version |
 | --- | --- | --- | --- |
@@ -36,12 +35,14 @@ in order to be processed by another server with different encoding.
 * Create the object that defines the conversions in order to do some operations
 
 ```go
-
-    //This object defines that the message will be converted:
-    //* header  -> from 'decimal' to 'hex'
-    //* payload -> from  'ascii' to 'hex'
+    /*This object 'MessagePack' defines how the message will be converted:
+    * header  -> from 'decimal' to 'hex'
+    * payload -> from  'ascii' to 'hex'
+    
+    E.g.: According to object MessagePack{} below, the message (header+payload) will be received by socket (decimal + ascii), and will converted to (hex + hex) in order to be written to socket.
+    */
     packer := &MessagePack{}
-	packer.NewMessagePack("Name of the client", "decimal", "hex", "ascii", "hex")
+    packer.NewMessagePack("Name of the client", "decimal", "hex", "ascii", "hex")
 
     //You can validate message size according to header and payload
     isValid, err := packer.ValidateMessageSize(header, payload)
@@ -49,8 +50,8 @@ in order to be processed by another server with different encoding.
     //Convert message header to decimal in order to do some calcs.
     decimalHeader := packer.GetDecimalHeader(header)
 			
-    //Get the payload size in order to do some calcs.        
-	decimalPayloadSize := packer.GetDecimalPayloadSize(payload)
+    //Get the payload size in order to do some calcs.
+    decimalPayloadSize := packer.GetDecimalPayloadSize(payload)
 
     //Convert message header in order to send to tcp socket for example
     headerConverted := packer.ConvertMessageHeader(header)
@@ -86,7 +87,7 @@ And the result obtained will be:
 
 ## Useful links and docs
 
-### [You can text the message conversion here](https://codebeautify.org/hex-string-converter)
+[You can test the message conversion here](https://codebeautify.org/hex-string-converter)
 
 
 ## Useful commands:
@@ -113,6 +114,6 @@ And the result obtained will be:
     go get -u -v "github.com/wagner-aos/go-binary-message-packer"    
 ```
 
-
+## I hope you enjoy it ;-)
 
 
