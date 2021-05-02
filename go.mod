@@ -1,4 +1,4 @@
-module go-binary-message-packer
+module github.com/wagner-aos/go-binary-message-packer
 
 go 1.14
 
