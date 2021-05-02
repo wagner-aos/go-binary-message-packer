@@ -80,7 +80,7 @@ func (mp *MessagePack) GetDecimalPayloadSize(payload []byte) int {
 	//PAYLOAD
 	switch mp.PayloadTypeReceived {
 	case "hex":
-		decimalPayloadSize = len(payload) * 2
+		decimalPayloadSize = len(payload) //TODO - BUG * 2
 	case "ascii":
 		decimalPayloadSize = len(payload)
 	}
