@@ -1,8 +1,9 @@
 package messagepacker
 
 import (
-	"go-binary-message-packer/utils"
 	"strconv"
+
+	utils "github.com/wagner-aos/go-binary-message-packer/utils"
 
 	"github.com/kataras/golog"
 )

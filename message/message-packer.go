@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"go-binary-message-packer/utils"
+	utils "github.com/wagner-aos/go-binary-message-packer/utils"
 )
 
 const (
