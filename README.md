@@ -13,7 +13,7 @@ This module helps to convert binary messages received on the TCP socket stream t
 
 |  | **Binary, Hex or Decimal** | **Hex or ASCII** | **Description** |
 | --- | --- | --- | ---- | 
-| **Header** | 0251 | 0593 | The size of the message |
+| **Header** | 0000001001010001 / 0251 / 593 | The size of the message |
 | **Content** | 6632336336373031... | f23c6701... | The payload (message content) |
 
 ### How to use in your code:
@@ -42,7 +42,7 @@ This module helps to convert binary messages received on the TCP socket stream t
     E.g.: According to object MessagePack{} below, the message (header+payload) will be received by socket (decimal + ascii), and will converted to (hex + hex) in order to be written to socket.
     */
     packer := &MessagePack{}
-    packer.NewMessagePack("Name of the client", "decimal", "hex", "ascii", "hex")
+    packer.NewMessagePack("Name of the client", 4, "decimal", "hex", "ascii", "hex")
 
     //You can validate message size according to header and payload
     isValid, err := packer.ValidateMessageSize(header, payload)

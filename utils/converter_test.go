@@ -43,4 +43,27 @@ func TestConverter(t *testing.T) {
 		})
 
 	})
+
+	Convey("Given a binary, should be converted to...", t, func() {
+
+		Convey("from binary string to decimal", func() {
+
+			binaryStr := "0000001001010001"
+
+			decimal, _ := ConvertBinaryToDecimal(binaryStr)
+			convey.Printf("decimal %d", decimal)
+
+			So(decimal, ShouldEqual, 593)
+		})
+
+		Convey("from decimal to binary", func() {
+
+			decimal := 593
+
+			binaryStr := ConvertDecimalToBinary(decimal)
+			convey.Printf("binary %s", binaryStr)
+
+			So(binaryStr, ShouldEqual, "1001010001")
+		})
+	})
 }

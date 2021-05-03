@@ -72,3 +72,15 @@ func ConvertDecimalToHexStr(numberDecimal int, formatter string) string {
 	}
 	return output
 }
+
+func ConvertBinaryToDecimal(binaryString string) (int, error) {
+	output, err := strconv.ParseInt(binaryString, 2, 64)
+	if err != nil {
+		return int(output), err
+	}
+	return int(output), nil
+}
+
+func ConvertDecimalToBinary(number int) string {
+	return strconv.FormatInt(int64(number), 2)
+}
