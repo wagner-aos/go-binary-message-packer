@@ -11,7 +11,7 @@ This module helps to convert binary messages received on the TCP socket stream t
 
 ### Message Components
 
-|  | **Hex or Decimal** | **Hex or ASCII** | **Description** |
+|  | **Binary, Hex or Decimal** | **Hex or ASCII** | **Description** |
 | --- | --- | --- | ---- | 
 | **Header** | 0251 | 0593 | The size of the message |
 | **Content** | 6632336336373031... | f23c6701... | The payload (message content) |
@@ -21,7 +21,7 @@ This module helps to convert binary messages received on the TCP socket stream t
 * Get from repository
 
 ```sh
-    go get -v "github.com/wagner-aos/go-binary-message-packer"
+    go get -v -u "github.com/wagner-aos/go-binary-message-packer"
 ```
 
 

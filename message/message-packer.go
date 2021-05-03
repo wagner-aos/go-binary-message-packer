@@ -8,8 +8,7 @@ import (
 )
 
 const (
-	messageTag  = "[MessagePacker]-"
-	HEADER_SIZE = 4
+	messageTag = "[MessagePacker]-"
 )
 
 /* MessagePack - it defines the type of encoding for message (header + payload)
@@ -34,9 +33,12 @@ type MessagePack struct {
 }
 
 //NewMessagePack - Creates an object to define inbound / outbound message protocol.
-func (mp *MessagePack) NewMessagePack(clientName, headerTypeReceived, headerTypeSent, payloadTypeReceived, payloadTypeSent string) error {
+func (mp *MessagePack) NewMessagePack(clientName string, headerSize int, headerTypeReceived, headerTypeSent, payloadTypeReceived, payloadTypeSent string) error {
 	if len(clientName) == 0 {
 		return errors.New(messageTag + "client name cannot be empty")
+	}
+	if headerSize != 2 && headerSize != 4 {
+		return errors.New(messageTag + "headerSize must have length 2 or 4")
 	}
 	if headerTypeReceived != "hex" && headerTypeReceived != "decimal" {
 		return errors.New(messageTag + "headerTypeReceived must contain 'hex' or 'decimal' type")
@@ -51,7 +53,7 @@ func (mp *MessagePack) NewMessagePack(clientName, headerTypeReceived, headerType
 		return errors.New(messageTag + "payloadTypeSent must contain 'hex' or 'ascii' type")
 	}
 
-	mp.HeaderSize = HEADER_SIZE
+	mp.HeaderSize = headerSize
 	mp.ClientName = clientName
 	mp.HeaderTypeReceived = headerTypeReceived
 	mp.HeaderTypeSent = headerTypeSent

@@ -12,7 +12,7 @@ func TestMessagePacker(t *testing.T) {
 	Convey("Given a message packer...", t, func() {
 
 		packer := &MessagePack{}
-		packer.NewMessagePack("Mastercard Interface Processor", "hex", "decimal", "hex", "ascii")
+		packer.NewMessagePack("Mastercard Interface Processor", 4, "hex", "decimal", "hex", "ascii")
 
 		convey.Printf("\nMessage Packer %v", packer)
 
@@ -43,7 +43,7 @@ func TestMessagePacker(t *testing.T) {
 	Convey("Given a ANOTHER message packer...", t, func() {
 
 		packer := &MessagePack{}
-		packer.NewMessagePack("Mastercard Interface Processor", "decimal", "hex", "ascii", "hex")
+		packer.NewMessagePack("Mastercard Interface Processor", 4, "decimal", "hex", "ascii", "hex")
 
 		convey.Printf("\nMessage Packer %v", packer)
 
@@ -85,7 +85,7 @@ func TestMessagePacker(t *testing.T) {
 	Convey("Given a ANOTHER message packer for validating SIZES...", t, func() {
 
 		packer := &MessagePack{}
-		packer.NewMessagePack("Mastercard Interface Processor", "decimal", "hex", "ascii", "hex")
+		packer.NewMessagePack("Mastercard Interface Processor", 4, "decimal", "hex", "ascii", "hex")
 
 		convey.Printf("\nMessage Packer %v", packer)
 
