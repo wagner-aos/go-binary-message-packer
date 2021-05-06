@@ -25,10 +25,11 @@ func TestConverter(t *testing.T) {
 
 			hexNumber := "0249"
 
-			decimal := ConvertHexStrToDecimal(hexNumber)
+			decimal, err := ConvertHexStrToDecimal(hexNumber)
 			convey.Printf("decimal %d", decimal)
 
 			So(decimal, ShouldEqual, 585)
+			So(err, ShouldBeNil)
 		})
 
 		Convey("from decimal to hex string", func() {
@@ -65,5 +66,29 @@ func TestConverter(t *testing.T) {
 
 			So(binaryStr, ShouldEqual, "1001010001")
 		})
+	})
+
+	Convey("Given a number, should be converted to...", t, func() {
+
+		Convey("from int to bcd", func() {
+
+			integer := 593
+
+			bcd := ConvertIntToBcd(integer)
+			convey.Printf("bcd %d", bcd)
+
+			So(bcd, ShouldEqual, 147)
+		})
+
+		Convey("from bcd to int", func() {
+
+			bcd := 147
+
+			integer := ConvertBcdToInt(bcd)
+			convey.Printf("int %d", integer)
+
+			So(integer, ShouldEqual, 593)
+		})
+
 	})
 }

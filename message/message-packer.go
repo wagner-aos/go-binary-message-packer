@@ -64,16 +64,17 @@ func (mp *MessagePack) NewMessagePack(clientName string, headerSize int, headerT
 }
 
 //GetDecimalHeader - it returns the decimal header content
-func (mp *MessagePack) GetDecimalHeader(header []byte) int {
+func (mp *MessagePack) GetDecimalHeader(header []byte) (int, error) {
 	decimalHeader := 0
+	var err error
 	//HEADER
 	switch mp.HeaderTypeReceived {
 	case "hex":
-		decimalHeader = ConvertMessageHeaderHexToInt(string(header))
+		decimalHeader, err = ConvertMessageHeaderHexToInt(string(header))
 	case "decimal":
-		decimalHeader = ConvertMessageHeaderASCIIToInt(string(header))
+		decimalHeader, err = ConvertMessageHeaderASCIIToInt(string(header))
 	}
-	return decimalHeader
+	return decimalHeader, err
 }
 
 //GetDecimalPayloadSize - it returns the length of the payload
@@ -92,7 +93,10 @@ func (mp *MessagePack) GetDecimalPayloadSize(payload []byte) int {
 //ValidateMessageSize - it returns if message payload size matches with header content.
 func (mp *MessagePack) ValidateMessageSize(header, payload []byte) (bool, error) {
 	isValid := true
-	decimalHeaderSize := mp.GetDecimalHeader(header)
+	decimalHeaderSize, err := mp.GetDecimalHeader(header)
+	if err != nil {
+		return false, err
+	}
 	decimalPayloadSize := mp.GetDecimalPayloadSize(payload)
 	if decimalHeaderSize != decimalPayloadSize {
 		return false, fmt.Errorf("message size error: HeaderSize = %d, PayloadSize = %d", decimalHeaderSize, decimalPayloadSize)
@@ -101,31 +105,33 @@ func (mp *MessagePack) ValidateMessageSize(header, payload []byte) (bool, error)
 }
 
 //ConvertMessageHeader - it converts message header according to message pack
-func (mp *MessagePack) ConvertMessageHeader(header []byte) []byte {
+func (mp *MessagePack) ConvertMessageHeader(header []byte) ([]byte, error) {
 	headerResponse := ""
+	var err error
 	//HEADER
 	switch mp.HeaderTypeReceived {
 	case "hex":
 		switch mp.HeaderTypeSent {
 		case "hex":
-			headerResponse = string(header)
+			headerResponse = string(header[:mp.HeaderSize])
 		case "decimal":
-			headerResponse = ConvertMessageHeaderHexToDecimalString(string(header))
+			headerResponse, err = ConvertMessageHeaderHexToDecimalString(string(header[:mp.HeaderSize]))
 		}
 	case "decimal":
 		switch mp.HeaderTypeSent {
 		case "hex":
-			headerResponse = ConvertMessageHeaderDecimalStringToHex(string(header))
+			headerResponse, err = ConvertMessageHeaderDecimalStringToHex(string(header[:mp.HeaderSize]))
 		case "decimal":
-			headerResponse = string(header)
+			headerResponse = string(header[:mp.HeaderSize])
 		}
 	}
-	return []byte(headerResponse)
+	return []byte(headerResponse), err
 }
 
 //ConvertMessagePayload - it converts message payload according to message pack
-func (mp *MessagePack) ConvertMessagePayload(payload []byte) []byte {
+func (mp *MessagePack) ConvertMessagePayload(payload []byte) ([]byte, error) {
 	payloadResponse := ""
+	var err error
 	//PAYLOAD
 	switch mp.PayloadTypeReceived {
 	case "hex":
@@ -133,7 +139,7 @@ func (mp *MessagePack) ConvertMessagePayload(payload []byte) []byte {
 		case "hex":
 			payloadResponse = string(payload)
 		case "ascii":
-			payloadResponse, _ = utils.ConvertHexToText(string(payload))
+			payloadResponse, err = utils.ConvertHexToText(string(payload))
 		}
 	case "ascii":
 		switch mp.PayloadTypeSent {
@@ -143,5 +149,5 @@ func (mp *MessagePack) ConvertMessagePayload(payload []byte) []byte {
 			payloadResponse = string(payload)
 		}
 	}
-	return []byte(payloadResponse)
+	return []byte(payloadResponse), err
 }

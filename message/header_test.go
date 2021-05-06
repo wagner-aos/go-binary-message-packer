@@ -15,33 +15,36 @@ func TestHeader(t *testing.T) {
 
 			bytes := "0249"
 
-			hexStr := ConvertMessageHeaderHexToDecimalString(bytes)
+			hexStr, err := ConvertMessageHeaderHexToDecimalString(bytes)
 			convey.Printf("\nhexHeader %s", bytes)
 			convey.Printf("\nhexStr %s\n", hexStr)
 
 			So(hexStr, ShouldEqual, "0585")
+			So(err, ShouldBeNil)
 		})
 
 		Convey("hex to int", func() {
 
 			bytes := "0249"
 
-			hexInt := ConvertMessageHeaderHexToInt(bytes)
+			hexInt, err := ConvertMessageHeaderHexToInt(bytes)
 			convey.Printf("\nhexHeader %s", bytes)
 			convey.Printf("\nhexInt %d\n", hexInt)
 
 			So(hexInt, ShouldEqual, 585)
+			So(err, ShouldBeNil)
 		})
 
 		Convey("str to hex", func() {
 
 			bytes := "0249"
 
-			hexDecimalStr := ConvertMessageHeaderHexToDecimalString(bytes)
+			hexDecimalStr, err := ConvertMessageHeaderHexToDecimalString(bytes)
 			convey.Printf("\nhexHeader %s", bytes)
 			convey.Printf("\nhexDecimalStr %s\n", hexDecimalStr)
 
 			So(hexDecimalStr, ShouldEqual, "0585")
+			So(err, ShouldBeNil)
 		})
 
 	})

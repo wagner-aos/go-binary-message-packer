@@ -32,12 +32,12 @@ func ConvertIntToString(number int) string {
 }
 
 //ConvertStringToInt -
-func ConvertStringToInt(number string) int {
+func ConvertStringToInt(number string) (int, error) {
 	result, err := strconv.Atoi(number)
 	if err != nil {
-		fmt.Println(err)
+		return result, err
 	}
-	return result
+	return result, nil
 }
 
 //ConvertTextToHexString -
@@ -46,12 +46,12 @@ func ConvertTextToHexString(byteArray []byte) string {
 }
 
 //ConvertHexStrToDecimal -
-func ConvertHexStrToDecimal(hexNumber string) int {
+func ConvertHexStrToDecimal(hexNumber string) (int, error) {
 	output, err := strconv.ParseUint(hexaNumberToInteger(hexNumber), 16, 64)
 	if err != nil {
-		fmt.Println(err)
+		return int(output), err
 	}
-	return int(output)
+	return int(output), nil
 }
 
 func hexaNumberToInteger(hexString string) string {
@@ -83,4 +83,12 @@ func ConvertBinaryToDecimal(binaryString string) (int, error) {
 
 func ConvertDecimalToBinary(number int) string {
 	return strconv.FormatInt(int64(number), 2)
+}
+
+func ConvertIntToBcd(value int) int {
+	return (((value / 10) % 10) << 4) | (value % 10)
+}
+
+func ConvertBcdToInt(value int) int {
+	return (int)((value>>4)*10 + (value & 0x0F))
 }
