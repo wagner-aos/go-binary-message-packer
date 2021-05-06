@@ -1,5 +1,5 @@
-.PHONY: all
-FORCE: ;
+#.PHONY: all
+#FORCE: ;
 
 test: test-no-cache
 	#go test -tags testing ./... -v
@@ -10,3 +10,11 @@ test-no-cache:
 
 test-convey:
 	~/go/bin/goconvey
+
+version:
+# gets tags across all branches, not just the current branch
+	git describe --tags `git rev-list --tags --max-count=1` 
+
+# new-version:
+# 	read -p "Enter the version description: "  description
+# 	echo ${description}
