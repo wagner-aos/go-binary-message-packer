@@ -37,8 +37,8 @@ func (mp *MessagePack) NewMessagePack(clientName string, headerSize int, headerT
 	if len(clientName) == 0 {
 		return errors.New(messageTag + "client name cannot be empty")
 	}
-	if headerSize != 2 && headerSize != 4 {
-		return errors.New(messageTag + "headerSize must have length 2 or 4")
+	if headerSize < 0 {
+		return errors.New(messageTag + "headerSize must not have lesser than 0")
 	}
 	if headerTypeReceived != "hex" && headerTypeReceived != "decimal" {
 		return errors.New(messageTag + "headerTypeReceived must contain 'hex' or 'decimal' type")

@@ -101,12 +101,12 @@ And the result obtained will be:
 
 * 2- Create a git tag with the version number.
 ```sh
-    git tag -a v0.0.2 -m "Describe the feature or hotfix here"
+    git tag -a v0.0.5 -m "Describe the feature or hotfix here"
 ```
 
 * 3- Push the tag to git repo.
 ```sh
-    git push origin v0.0.2
+    git push origin v0.0.5
 ```
 
 * 4- Now the new version can be dowloaded to the other go projects.
